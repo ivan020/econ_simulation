@@ -32,6 +32,11 @@ int main(void) {
   for (int i = 0; i < H; i++) {
     float gen_wealth = rand_float(0.0, 1.0);
     float m = rand_float(0.01, 0.02);
-    populate_household(&h[i], i, gen_wealth, m);
+    populate_household(&h[i], i + 1, gen_wealth, m);
+  }
+
+  for (int i = 0; i < H; i++) {
+
+    printf("household name->%d\n", h[i].name);
   }
 }
