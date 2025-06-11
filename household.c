@@ -1,3 +1,8 @@
+/*
+ * Household is the largest population in our simulation;
+ *  -> defines the structure;
+ *  -> initial seeding function;
+ */
 #include "const.c"
 #include "randomizer.c"
 #include <stdio.h>
@@ -26,6 +31,7 @@ void populate_household(Household *household, int name, float w, float m) {
 }
 
 int main(void) {
+  // for illustration of how the seeding function works;
 
   Household h[H];
 
