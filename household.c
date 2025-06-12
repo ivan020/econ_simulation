@@ -7,26 +7,79 @@
 #include "randomizer.c"
 #include <stdio.h>
 #include <string.h>
+#define TRUE 1
+#define FALSE 0
 #define MAXTYPEA 7
+#define MAXTYPEB 7
+#define MAXTYPEC_R 7
+#define MAXTYPED_R 7
 #define H 10
 
 struct Household {
   int name;
+  int risk_profile;
+  int employed; // employment flag;
+
   float wealth;
-  float m;
+  float m;        // idk
+  float c;        // consumption
+  float dividend; // dividend
+  float alpha;    // idk again
+  float P;        // idk again
+  float loan;
+  float deposit;
+  float rate_on_deposit;
+  float deposited_funds;
+  float loan_rate;
+  float loan_capacity;
+  float serviceable_loan;
+
   int typeA[MAXTYPEA];
+  int typeB[MAXTYPEB];
+  int typeC_R[MAXTYPEC_R];
+  int typeD_R[MAXTYPED_R];
 };
 
 typedef struct Household Household;
 
 void populate_household(Household *household, int name, float w, float m) {
+  // function to generate the household data point
 
   household->name = name;
+  household->risk_profile = -1;
+  household->employed = FALSE;
+
+  household->alpha = 0.0;
+  household->P = 0.0;
+  household->loan = 0.0;
+  household->deposit = 0.0;
+  household->rate_on_deposit = 0.0;
+  household->deposited_funds = 0.0;
+  household->loan_rate = 0.0;
+  household->deposit = 0.0;
+  household->rate_on_deposit = 0.0;
+  household->loan_capacity = 0.0;
+  household->serviceable_loan = 0.0;
+
   household->wealth = w;
   household->m = m;
 
+  // not very nice but need to populate arrays somehow;
+
   for (int i = 0; i < MAXTYPEA; i++) {
     household->typeA[i] = -1;
+  }
+
+  for (int i = 0; i < MAXTYPEB; i++) {
+    household->typeB[i] = -1;
+  }
+
+  for (int i = 0; i < MAXTYPEC_R; i++) {
+    household->typeC_R[i] = -1;
+  }
+
+  for (int i = 0; i < MAXTYPED_R; i++) {
+    household->typeD_R[i] = -1;
   }
 }
 
