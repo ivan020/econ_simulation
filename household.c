@@ -46,9 +46,9 @@ typedef struct Household Household;
 
 // some  debugging functions
 void print_household(Household *household);
-void print_household_parameters(Household *household);
 
-void populate_household(Household *household, int name, float w, float m) {
+void populate_household(Household *household, int name, float w, float m,
+                        float c) {
   // function to generate the household data point
   int i;
 
@@ -70,6 +70,7 @@ void populate_household(Household *household, int name, float w, float m) {
 
   household->wealth = w;
   household->m = m;
+  household->c = c;
 
   // not very nice but need to populate arrays somehow;
 
@@ -90,6 +91,20 @@ void populate_household(Household *household, int name, float w, float m) {
   }
 }
 
+float temporal_consumption(float current_wealth, float productsP) {
+  // temporal consumption function;
+  return current_wealth / productsP;
+}
+
+void hh_consumption_update(Household households[]) {
+  // function to update consumption for all hhs;
+  for (int i = 0; i < H; i++) {
+    float current_wealth = households[i].m;
+    float productsP = households[i].P;
+    households[i].c = temporal_consumption(current_wealth, productsP);
+  }
+}
+
 int main(void) {
   // for illustration of how the seeding function works;
 
@@ -97,8 +112,9 @@ int main(void) {
 
   for (int i = 0; i < H; i++) {
     float gen_wealth = rand_float(0.0, 1.0);
-    float m = rand_float(0.01, 0.02);
-    populate_household(&h[i], i + 1, gen_wealth, m);
+    float m = rand_float(0.01, 1.0);
+    float c = rand_float(0.01, 1.0);
+    populate_household(&h[i], i + 1, gen_wealth, m, c);
   }
 
   for (int i = 0; i < H; i++) {
