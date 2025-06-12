@@ -2,13 +2,14 @@
  * Household is the largest population in our simulation;
  *  -> defines the structure;
  *  -> initial seeding function;
+ *  -> households have at max HHRELATIONS relations with firms and banks;
  */
 #include "const.c"
 #include "randomizer.c"
 #include <stdio.h>
-#include <string.h>
 #define TRUE 1
 #define FALSE 0
+#define HHRELATIONS 4
 #define MAXTYPEA 7
 #define MAXTYPEB 7
 #define MAXTYPEC_R 7
@@ -42,8 +43,13 @@ struct Household {
 
 typedef struct Household Household;
 
+// some  debugging functions
+void print_household(Household *household);
+void print_household_parameters(Household *household);
+
 void populate_household(Household *household, int name, float w, float m) {
   // function to generate the household data point
+  int i;
 
   household->name = name;
   household->risk_profile = -1;
@@ -66,19 +72,19 @@ void populate_household(Household *household, int name, float w, float m) {
 
   // not very nice but need to populate arrays somehow;
 
-  for (int i = 0; i < MAXTYPEA; i++) {
+  for (i = 0; i < MAXTYPEA; i++) {
     household->typeA[i] = -1;
   }
 
-  for (int i = 0; i < MAXTYPEB; i++) {
+  for (i = 0; i < MAXTYPEB; i++) {
     household->typeB[i] = -1;
   }
 
-  for (int i = 0; i < MAXTYPEC_R; i++) {
+  for (i = 0; i < MAXTYPEC_R; i++) {
     household->typeC_R[i] = -1;
   }
 
-  for (int i = 0; i < MAXTYPED_R; i++) {
+  for (i = 0; i < MAXTYPED_R; i++) {
     household->typeD_R[i] = -1;
   }
 }
