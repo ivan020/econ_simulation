@@ -6,6 +6,7 @@
  */
 #include "const.c"
 #include "randomizer.c"
+#include "utils.c"
 #include <stdio.h>
 #define TRUE 1
 #define FALSE 0
@@ -26,7 +27,7 @@ struct Household {
   float c;        // consumption
   float dividend; // dividend
   float alpha;    // idk again
-  float P;        // idk again
+  float P;        // product --- some homogenous product a household owns
   float loan;
   float deposit;
   float rate_on_deposit;
@@ -116,9 +117,25 @@ void print_household(Household *household) {
   printf("\t employment status: %d\n", household->employed);
 
   printf("\t wealth: %f\n", household->wealth);
-  printf("\t m: %f\n", household->m);
-  printf("\t wealth: %f\n", household->wealth);
-  printf("\t wealth: %f\n", household->wealth);
-  printf("\t wealth: %f\n", household->wealth);
-  printf("\t wealth: %f\n", household->wealth);
+  printf("\t money: %f\n", household->m);
+  printf("\t alpha: %f\n", household->alpha);
+  printf("\t P: %f\n", household->P);
+  printf("\t deposit: %f\n", household->deposit);
+  printf("\t rate_on_deposit: %f\n", household->rate_on_deposit);
+  printf("\t loan: %f\n", household->loan);
+  printf("\t loan_rate: %f\n", household->loan_rate);
+  printf("\t loan_capacity: %f\n", household->loan_capacity);
+  printf("\t serviceable_loan: %f\n", household->serviceable_loan);
+
+  printf("\tType a relations A with:");
+  print_list(household->typeA, MAXTYPEA);
+
+  printf("\tType a relations B with:");
+  print_list(household->typeB, MAXTYPEB);
+
+  printf("\tType a relations C with:");
+  print_list(household->typeC_R, MAXTYPEC_R);
+
+  printf("\tType a relations D with:");
+  print_list(household->typeD_R, MAXTYPED_R);
 }
