@@ -7,6 +7,7 @@
 #include "const.c"
 #include "randomizer.c"
 #include "utils.c"
+#include <math.h>
 #include <stdio.h>
 #define TRUE 1
 #define FALSE 0
@@ -97,11 +98,15 @@ float temporal_consumption(float current_wealth, float productsP) {
 }
 
 void hh_consumption_update(Household households[]) {
-  // function to update consumption for all hhs;
+  /* update each households' consumption preferences */
   for (int i = 0; i < H; i++) {
     float current_wealth = households[i].m;
     float productsP = households[i].P;
-    households[i].c = temporal_consumption(current_wealth, productsP);
+    float hhAlpha = households[i].alpha;
+    float temp_c = temporal_consumption(current_wealth, productsP);
+    float raised = pow(temp_c, hhAlpha);
+    float new_consumption = (raised > temp_c) ? temp_c : raised;
+    households[i].c = new_consumption;
   }
 }
 
