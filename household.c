@@ -22,7 +22,7 @@ struct Household {
   int employed; // employment flag;
 
   float wealth;
-  float m;        // idk
+  float m;        // money --- liquidity available to the household
   float c;        // consumption
   float dividend; // dividend
   float alpha;    // idk again
@@ -101,7 +101,24 @@ int main(void) {
   }
 
   for (int i = 0; i < H; i++) {
-
-    printf("household name->%d\n", h[i].name);
+    print_household(&h[i]);
   }
+}
+
+void print_household(Household *household) {
+  // a debug-ish function to show the household data struct
+
+  printf("Household\n");
+
+  printf("\t name: %d\n", household->name);
+  printf("\t address: %p\n", &household);
+  printf("\t risk_profile: %d\n", household->risk_profile);
+  printf("\t employment status: %d\n", household->employed);
+
+  printf("\t wealth: %f\n", household->wealth);
+  printf("\t m: %f\n", household->m);
+  printf("\t wealth: %f\n", household->wealth);
+  printf("\t wealth: %f\n", household->wealth);
+  printf("\t wealth: %f\n", household->wealth);
+  printf("\t wealth: %f\n", household->wealth);
 }
