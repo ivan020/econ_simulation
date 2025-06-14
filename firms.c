@@ -1,5 +1,9 @@
 
 #define F 10
+#define MAXTYPEA 3
+#define MAXTYPEB 3
+#define MAXTYPEC_C 3
+#define MAXTYPED_C 3
 /* firms script */
 
 struct Firm {
@@ -20,6 +24,10 @@ struct Firm {
   float loan, deposit;
 
   // arrays:
+  int typeA[MAXTYPEA];
+  int typeB[MAXTYPEB];
+  int typeC_C[MAXTYPEC_C];
+  int typeD_C[MAXTYPED_C];
 };
 
 // will try dvorak layour
