@@ -11,6 +11,7 @@ struct Firm {
   int mc; // idk
   int to_hire, to_fire;
   int months_w_open_position;
+  int credit_score;
 
   float w; // wage at the firm
   float m; // liquidity level available;
@@ -30,4 +31,4 @@ struct Firm {
   int typeD_C[MAXTYPED_C];
 };
 
-// will try dvorak layour
+// will try dvorak layout
