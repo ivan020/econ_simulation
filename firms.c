@@ -15,6 +15,8 @@ const int lambda = 3;
 const int nDays = 21;
 const float Phi_max = 1.15;
 const float Phi_min = 1.025;
+const float Theta = 0.75;
+const float theta = 0.75;
 
 struct Firm {
   int name;
@@ -42,7 +44,7 @@ struct Firm {
   float borrowed_funds;
 
   // max and min production bounds
-  float p_max, p_min;
+  float p, p_max, p_min;
 
   // arrays:
   int typeA[MAXTYPEA];
@@ -52,9 +54,6 @@ struct Firm {
 };
 
 typedef struct Firm Firm;
-
-// will try dvorak layout
-//
 
 void increment_months_with_open_position(Firm *firm) {
   firm->months_w_open_position += 1;
@@ -79,8 +78,18 @@ void update_production_inventory(Firm *firm) {
   firm->p_min = Phi_min * firm->d;
 }
 
+void increase_production_price(Firm *firm) {
+  firm->to_hire = 1;
+  firm->to_fire = 0;
+  if (firm->p < firm->p_max && rand_float(0.0, 1.0) < Theta) {
+    // with random probability increase the price to cool off the demand
+    firm->p = firm->p * (1 - rand_float(0.0, theta));
+  }
+}
+
 void update_labour_price(Firm firms[]) {
   for (int i = 0; i < F; i++) {
+
     if (firms[i].to_hire > 0) {
       increment_months_with_open_position(&firms[i]);
     }
@@ -88,10 +97,45 @@ void update_labour_price(Firm firms[]) {
     if (firms[i].to_hire == 0 && firms[i].months_w_open_position > 0) {
       make_labour_cheaper(&firms[i]);
     }
+
     if (firms[i].months_w_open_position >= GAMMA) {
       increment_proposed_salary(&firms[i]);
     }
 
     update_production_inventory(&firms[i]);
+
+    if (firms[i].inv < firms[i].inv_min) {
+      increase_production_price(&firms[i]);
+    }
+  }
+}
+
+void populate_firm(Firm *firm, int name, float w, float inv, float inv_min,
+                   float inv_max, float p, float p_min, float p_max) {
+  firm->name = name;
+  firm->credit_score = -1;
+  firm->p = p;
+  firm->w = w;
+  firm->inv = inv;
+
+  firm->inv_min = inv * 0.9;
+  firm->inv_max = inv * 1.1;
+  firm->p_min = p * 0.9;
+  firm->p_max = p * 1.1;
+
+  for (int i = 0; i < MAXTYPEA; i++) {
+    firm->typeA[i] = -1;
+  }
+
+  for (int i = 0; i < MAXTYPEB; i++) {
+    firm->typeB[i] = -1;
+  }
+
+  for (int i = 0; i < MAXTYPEC_C; i++) {
+    firm->typeC_C[i] = -1;
+  }
+
+  for (int i = 0; i < MAXTYPED_C; i++) {
+    firm->typeD_C[i] = -1;
   }
 }
