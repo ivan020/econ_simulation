@@ -25,7 +25,7 @@ double Theta = 0.75;
 int gamma = 3;
 int beta = 5;
 int n = 7;
-double ki = 0.01;
+double ki = 0.01; // figure out what that is
 double r = 0.03;
 
 int bav = 2; // firm or a household is visiting at most bav banks;
